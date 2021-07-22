@@ -45,10 +45,25 @@ var uTube = {
      return;
     if (aRequest)
      aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-    if (result.hasOwnProperty('list'))
-     aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.v + '$' + result.list;
+    let defU = uTube.hostedURL();
+    let u = false;
+    if (!defU)
+    {
+     if (result.hasOwnProperty('list'))
+      u = 'https://www.youtube-nocookie.com/embed/' + result.v + '?list=' + result.list;
+     else
+      u = 'https://www.youtube-nocookie.com/embed/' + result.v;
+    }
     else
-     aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.v;
+    {
+     if (result.hasOwnProperty('list'))
+      u = defU + '#' + result.v + '$' + result.list;
+     else
+      u = defU + '#' + result.v;
+    }
+    if (!u)
+     return;
+    aProgress.DOMWindow.location.href = u;
     return;
    }
    if (aURI.filePath === '/playlist')
@@ -57,7 +72,11 @@ var uTube = {
      return;
     if (aRequest)
      aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-    aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.list;
+    let defU = uTube.hostedURL();
+    if (!defU)
+     aProgress.DOMWindow.location.href = 'https://www.youtube-nocookie.com/embed/videoseries?list=' + result.list;
+    else
+     aProgress.DOMWindow.location.href = defU + '#' + result.list;
     return;
    }
   },
@@ -66,6 +85,15 @@ var uTube = {
   onStatusChange: function() {},
   onSecurityChange: function() {},
   onLinkIconAvailable: function() {}
+ },
+ hostedURL: function()
+ {
+  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+  if (prefs.prefHasUserValue('extensions.utube.hosted') && prefs.getBoolPref('extensions.utube.hosted') === false)
+   return false;
+  if (prefs.prefHasUserValue('extensions.utube.hostedURL'))
+   return prefs.getCharPref('extensions.utube.hostedURL');
+  return 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.htm';
  }
 };
 window.addEventListener('load', uTube.LoadListener, false);
