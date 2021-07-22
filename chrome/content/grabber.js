@@ -45,9 +45,9 @@ var uTube = {
      return;
     aRequest.cancel(Components.results.NS_BINDING_ABORTED);
     if (result.hasOwnProperty('list'))
-     aProgress.DOMWindow.location.href = 'https://www.youtube-nocookie.com/embed/' + result.v + '?list=' + result.list;
+     aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.v + '$' + result.list;
     else
-     aProgress.DOMWindow.location.href = 'https://www.youtube-nocookie.com/embed/' + result.v;
+     aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.v;
     return;
    }
    if (aURI.filePath === '/playlist')
@@ -55,7 +55,7 @@ var uTube = {
     if (!result.hasOwnProperty('list'))
      return;
     aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-    aProgress.DOMWindow.location.href = 'https://www.youtube-nocookie.com/embed/videoseries?list=' + result.list;
+    aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.list;
     return;
    }
   },
