@@ -3,20 +3,6 @@ var uTube = {
  {
   window.removeEventListener('load', uTube.LoadListener, false);
   gBrowser.addTabsProgressListener(uTube.ProgressListener, Components.interfaces.nsIWebProgress.NOTIFY_PROGRESS);
-  /*
-  let observerService = Components.classes['@mozilla.org/observer-service;1'].getService(Components.interfaces.nsIObserverService);
-  observerService.addObserver(zzbigz_grabber.ResponseObserver, 'http-on-examine-response', false);
-  zzbigz_network.session = null;
-  let cookieManager = Components.classes['@mozilla.org/cookiemanager;1'].getService(Components.interfaces.nsICookieManager2);
-  let eCookies = cookieManager.getCookiesFromHost('zbigz.com', {});
-  while (eCookies.hasMoreElements())
-  {
-   let cookie = eCookies.getNext().QueryInterface(Components.interfaces.nsICookie2); 
-   if(cookie.name !== 'session')
-    continue;
-   zzbigz_network.session = cookie.value;
-  }
-  */
  },
  ProgressListener:
  {
