@@ -43,7 +43,8 @@ var uTube = {
    {
     if (!result.hasOwnProperty('v'))
      return;
-    aRequest.cancel(Components.results.NS_BINDING_ABORTED);
+    if (aRequest)
+     aRequest.cancel(Components.results.NS_BINDING_ABORTED);
     if (result.hasOwnProperty('list'))
      aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.v + '$' + result.list;
     else
@@ -54,7 +55,8 @@ var uTube = {
    {
     if (!result.hasOwnProperty('list'))
      return;
-    aRequest.cancel(Components.results.NS_BINDING_ABORTED);
+    if (aRequest)
+     aRequest.cancel(Components.results.NS_BINDING_ABORTED);
     aProgress.DOMWindow.location.href = 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.html#' + result.list;
     return;
    }
