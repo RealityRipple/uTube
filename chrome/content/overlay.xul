@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
-<overlay id="uTubeOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
- <script src="chrome://utube/content/grabber.js" />
+<overlay id="muTubeOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+ <script src="chrome://mutube/content/grabber.js" />
 </overlay>

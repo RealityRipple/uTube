@@ -1,4 +1,4 @@
-content utube       chrome/content/
-locale  utube en-US chrome/locale/en-US/
-skin    utube skin  chrome/skin/
-overlay chrome://browser/content/browser.xul chrome://utube/content/overlay.xul
+content mutube       chrome/content/
+locale  mutube en-US chrome/locale/en-US/
+skin    mutube skin  chrome/skin/
+overlay chrome://browser/content/browser.xul chrome://mutube/content/overlay.xul
