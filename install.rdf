@@ -18,6 +18,8 @@
   <em:updateURL>https://realityripple.com/Software/Mozilla-Extensions/uTube/update.rdf</em:updateURL>
   <em:iconURL>chrome://utube/skin/logo.png</em:iconURL>
   <em:iconURL64>chrome://utube/skin/logo64.png</em:iconURL64>
+  <em:optionsURL>chrome://utube/content/prefs.xul</em:optionsURL>
+  <em:optionsType>2</em:optionsType>
   <em:creator>RealityRipple</em:creator>
  </Description>
 </RDF>

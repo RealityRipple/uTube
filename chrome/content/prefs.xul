@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE prefs SYSTEM "chrome://utube/locale/prefs.dtd">
+<vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+ <setting type="bool" pref="extensions.utube.autoplay" title="&utube.autoplay.title;" desc="&utube.autoplay.desc;" />
+</vbox>

@@ -67,6 +67,7 @@ var uTube = {
     aProgress.DOMWindow.location.href = yU;
     return;
    }
+   let a = uTube.useAutoplay();
    if (aURI.filePath === '/watch')
    {
     if (!result.hasOwnProperty('v'))
@@ -77,9 +78,17 @@ var uTube = {
     if (!defU)
     {
      if (result.hasOwnProperty('list'))
+     {
       u = 'https://www.youtube-nocookie.com/embed/' + result.v + '?list=' + result.list;
+      if (a)
+       u += '&autoplay=1';
+     }
      else
+     {
       u = 'https://www.youtube-nocookie.com/embed/' + result.v;
+      if (a)
+       u += '?autoplay=1';
+     }
     }
     else
     {
@@ -87,6 +96,8 @@ var uTube = {
       u = defU + '#' + result.v + '$' + result.list;
      else
       u = defU + '#' + result.v;
+     if (a)
+      u += '!';
     }
     if (!u)
      return;
@@ -99,10 +110,22 @@ var uTube = {
      return;
     if (aRequest)
      aRequest.cancel(Components.results.NS_BINDING_ABORTED);
+    let pu = false;
     if (!defU)
-     aProgress.DOMWindow.location.href = 'https://www.youtube-nocookie.com/embed/videoseries?list=' + result.list;
+    {
+     pu = 'https://www.youtube-nocookie.com/embed/videoseries?list=' + result.list;
+     if (a)
+      pu += '&autoplay=1';
+    }
     else
-     aProgress.DOMWindow.location.href = defU + '#' + result.list;
+    {
+     pu = defU + '#' + result.list;
+     if (a)
+      pu += '!';
+    }
+    if (!pu)
+     return;
+    aProgress.DOMWindow.location.href = pu;
     return;
    }
   },
@@ -196,6 +219,13 @@ var uTube = {
   if (prefs.prefHasUserValue('extensions.utube.hostedURL'))
    return prefs.getCharPref('extensions.utube.hostedURL');
   return 'https://realityripple.com/Software/Mozilla-Extensions/uTube/play.htm';
+ },
+ useAutoplay: function()
+ {
+  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+  if (!prefs.prefHasUserValue('extensions.utube.autoplay'))
+   return false;
+  return prefs.getBoolPref('extensions.utube.autoplay');
  }
 };
 window.addEventListener('load', uTube.LoadListener, false);
