@@ -64,7 +64,7 @@ var uTube = {
     yU = yU.replace('&feature=emb_imp_woyt', '');
     yU = yU.replace('?feature=emb_imp_woyt', '');
     yU += '#skipU';
-    aProgress.DOMWindow.location.href = yU;
+    aProgress.DOMWindow.location.replace(yU);
     return;
    }
    let a = uTube.useAutoplay();
@@ -101,7 +101,7 @@ var uTube = {
     }
     if (!u)
      return;
-    aProgress.DOMWindow.location.href = u;
+    aProgress.DOMWindow.location.replace(u);
     return;
    }
    if (aURI.filePath === '/playlist')
@@ -125,7 +125,7 @@ var uTube = {
     }
     if (!pu)
      return;
-    aProgress.DOMWindow.location.href = pu;
+    aProgress.DOMWindow.location.replace(pu);
     return;
    }
   },
@@ -168,15 +168,15 @@ var uTube = {
     if (h.indexOf('$') === -1)
     {
      if (h.slice(0, 2) === 'PL' && h.length > 12)
-      this.location.href = 'https://www.youtube.com/playlist?list=' + h + '#skipU';
+      this.location.replace('https://www.youtube.com/playlist?list=' + h + '#skipU');
      else
-      this.location.href = 'https://www.youtube.com/watch?v=' + h + '#skipU';
+      this.location.replace('https://www.youtube.com/watch?v=' + h + '#skipU');
     }
     else
     {
      let v = h.slice(0, h.indexOf('$'));
      let p = h.slice(h.indexOf('$') + 1);
-     this.location.href = 'https://www.youtube.com/watch?v=' + v + '&list=' + p + '#skipU';
+     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '#skipU');
     }
    }
    else if (this.location.pathname.slice(0, 7) === '/embed/')
@@ -197,11 +197,11 @@ var uTube = {
     if (result.hasOwnProperty('list'))
      p = result.list;
     if (v === 'videoseries')
-     this.location.href = 'https://www.youtube.com/playlist?list=' + p + '#skipU';
+     this.location.replace('https://www.youtube.com/playlist?list=' + p + '#skipU');
     else if (p === null)
-     this.location.href = 'https://www.youtube.com/watch?v=' + v + '#skipU';
+     this.location.replace('https://www.youtube.com/watch?v=' + v + '#skipU');
     else
-     this.location.href = 'https://www.youtube.com/watch?v=' + v + '&list=' + p + '#skipU';
+     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '#skipU');
    }
    return;
   }
