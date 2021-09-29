@@ -3,7 +3,7 @@
  <Description about="urn:mozilla:install-manifest">
   <em:name>uTube</em:name>
   <em:id>{EC845603-2E80-5C58-AEB0-7791201C9A9C}</em:id>
-  <em:version>1.5</em:version>
+  <em:version>1.6</em:version>
   <em:type>2</em:type>
   <!-- Pale Moon -->
   <em:targetApplication>

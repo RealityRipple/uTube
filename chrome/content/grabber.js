@@ -14,7 +14,8 @@ var uTube = {
     return this;
    throw Components.results.NS_NOINTERFACE;
   },
-  onLocationChange: function(aBrowser, aProgress, aRequest, aURI, aFlags) {
+  onLocationChange: function(aBrowser, aProgress, aRequest, aURI, aFlags)
+  {
    let defU = uTube.hostedURL();
    if (defU)
    {
