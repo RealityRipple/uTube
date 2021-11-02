@@ -138,15 +138,6 @@ var uTube = {
  },
  checkForError: function()
  {
-  if (this.location.host === 'www.youtube.com')
-  {
-   if (mp.classList.contains('playing-mode'))
-   {
-    this.clearInterval(this.uTubeErrorChecker);
-    return;
-   }
-   return;
-  }
   let mp = null;
   for (let f = 0; f < this.frames.length; f++)
   {
@@ -160,6 +151,15 @@ var uTube = {
    mp = this.document.getElementById('movie_player');
   if (mp === null)
    return;
+  if (this.location.host === 'www.youtube.com' || this.location.host === 'm.youtube.com')
+  {
+   if (mp.classList.contains('playing-mode'))
+   {
+    this.clearInterval(this.uTubeErrorChecker);
+    return;
+   }
+   return;
+  }
   if (mp.classList.contains('ytp-embed-error'))
   {
    this.clearInterval(this.uTubeErrorChecker);
