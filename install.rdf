@@ -3,7 +3,7 @@
  <Description about="urn:mozilla:install-manifest">
   <em:name>ΜTube</em:name>
   <em:id>{35FF1267-2C7D-5FA8-876D-4EDFC0CB89FB}</em:id>
-  <em:version>1.1</em:version>
+  <em:version>1.2</em:version>
   <em:type>2</em:type>
   <!-- Pale Moon -->
   <em:targetApplication>
