@@ -45,10 +45,14 @@ var uTube = {
       aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
     }
    }
-   if (aURI.asciiHost !== 'www.youtube.com')
+   if (aURI.asciiHost !== 'www.youtube.com' && aURI.asciiHost !== 'm.youtube.com')
+   {
+    if (aBrowser.hasAttribute('skipV'))
+     aBrowser.removeAttribute('skipV');
+    if (aBrowser.hasAttribute('skipPL'))
+     aBrowser.removeAttribute('skipPL');
     return;
-   if (aURI.ref === 'skipU')
-    return;
+   }
    let result = {};
    aURI.query.split('&').forEach(
     function(part)
@@ -57,16 +61,37 @@ var uTube = {
      result[item[0]] = decodeURIComponent(item[1]);
     }
    );
+   if (aURI.ref === 'skipU')
+   {
+    if (result.hasOwnProperty('list'))
+     aBrowser.setAttribute('skipPL', result.list);
+    else if (result.hasOwnProperty('v'))
+     aBrowser.setAttribute('skipV', result.v);
+   }
    if (result.hasOwnProperty('feature') && result.feature === 'emb_imp_woyt')
    {
-    let yU = aProgress.DOMWindow.location.href;
-    if (aRequest)
-     aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-    yU = yU.replace('&feature=emb_imp_woyt', '');
-    yU = yU.replace('?feature=emb_imp_woyt', '');
-    yU += '#skipU';
-    aProgress.DOMWindow.location.replace(yU);
-    return;
+    if (result.hasOwnProperty('list'))
+     aBrowser.setAttribute('skipPL', result.list);
+    else if (result.hasOwnProperty('v'))
+     aBrowser.setAttribute('skipV', result.v);
+   }
+   if (aBrowser.hasAttribute('skipPL'))
+   {
+    if (result.hasOwnProperty('list'))
+    {
+     if (aBrowser.getAttribute('skipPL') === result.list)
+      return;
+    }
+    aBrowser.removeAttribute('skipPL');
+   }
+   if (aBrowser.hasAttribute('skipV'))
+   {
+    if (result.hasOwnProperty('v'))
+    {
+     if (aBrowser.getAttribute('skipV') === result.v)
+      return;
+    }
+    aBrowser.removeAttribute('skipV');
    }
    let a = uTube.useAutoplay();
    if (aURI.filePath === '/watch')
@@ -169,15 +194,15 @@ var uTube = {
     if (h.indexOf('$') === -1)
     {
      if (h.slice(0, 2) === 'PL' && h.length > 12)
-      this.location.replace('https://www.youtube.com/playlist?list=' + h + '#skipU');
+      this.location.replace('https://www.youtube.com/playlist?list=' + h + '&feature=emb_imp_woyt');
      else
-      this.location.replace('https://www.youtube.com/watch?v=' + h + '#skipU');
+      this.location.replace('https://www.youtube.com/watch?v=' + h + '&feature=emb_imp_woyt');
     }
     else
     {
      let v = h.slice(0, h.indexOf('$'));
      let p = h.slice(h.indexOf('$') + 1);
-     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '#skipU');
+     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '&feature=emb_imp_woyt');
     }
    }
    else if (this.location.pathname.slice(0, 7) === '/embed/')
@@ -198,11 +223,11 @@ var uTube = {
     if (result.hasOwnProperty('list'))
      p = result.list;
     if (v === 'videoseries')
-     this.location.replace('https://www.youtube.com/playlist?list=' + p + '#skipU');
+     this.location.replace('https://www.youtube.com/playlist?list=' + p + '&feature=emb_imp_woyt');
     else if (p === null)
-     this.location.replace('https://www.youtube.com/watch?v=' + v + '#skipU');
+     this.location.replace('https://www.youtube.com/watch?v=' + v + '&feature=emb_imp_woyt');
     else
-     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '#skipU');
+     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '&feature=emb_imp_woyt');
    }
    return;
   }
