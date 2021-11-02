@@ -29,7 +29,7 @@ var muTube = {
     u+= '#' + aURI.ref;
    if (aRequest)
     aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-   aProgress.DOMWindow.location.href = u;
+   aProgress.DOMWindow.location.replace(u);
   },
   onStateChange: function() {},
   onProgressChange: function() {},
