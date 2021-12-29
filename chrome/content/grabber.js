@@ -3,6 +3,7 @@ var muTube = {
  {
   window.removeEventListener('load', muTube.LoadListener, false);
   gBrowser.addTabsProgressListener(muTube.ProgressListener, Components.interfaces.nsIWebProgress.NOTIFY_PROGRESS);
+  Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch).addObserver('extensions.xpiState', muTube.PrefObserver, false);
  },
  ProgressListener:
  {
@@ -36,6 +37,57 @@ var muTube = {
   onStatusChange: function() {},
   onSecurityChange: function() {},
   onLinkIconAvailable: function() {}
+ },
+ PrefObserver:
+ {
+  observe: function(aSubject, aTopic, aData)
+  {
+   try
+   {
+    let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+    let states = JSON.parse(prefs.getCharPref(aData));
+    if (states['app-profile'] !== undefined)
+    {
+     if (states['app-profile']['{35FF1267-2C7D-5FA8-876D-4EDFC0CB89FB}'] !== undefined)
+     {
+      if (states['app-profile']['{35FF1267-2C7D-5FA8-876D-4EDFC0CB89FB}'].e === false)
+       muTube.RemoveMobileCookie();
+     }
+    }
+    if (states['app-global'] !== undefined)
+    {
+     if (states['app-global']['{35FF1267-2C7D-5FA8-876D-4EDFC0CB89FB}'] !== undefined)
+     {
+      if (states['app-global']['{35FF1267-2C7D-5FA8-876D-4EDFC0CB89FB}'].e === false)
+       muTube.RemoveMobileCookie();
+     }
+    }
+   }
+   catch (ex) {}
+  }
+ },
+ RemoveMobileCookie: function()
+ {
+  let cMgr = Components.classes['@mozilla.org/cookiemanager;1'].getService(Components.interfaces.nsICookieManager2);
+  let cookies = cMgr.getCookiesFromHost('.youtube.com', {});
+  while (cookies.hasMoreElements())
+  {
+   let c = cookies.getNext();
+   c.QueryInterface(Components.interfaces.nsICookie2);
+   if (c.name !== 'PREF')
+    continue;
+   let p = new URLSearchParams(c.value);
+   if (!p.has('app'))
+    continue;
+   if (p.get('app') !== 'm')
+    continue;
+   p.delete('app');
+   let v = p.toString();
+   if (v === '')
+    cMgr.remove(c.host, c.name, c.path, false, c.originAttributes);
+   else
+    cMgr.add(c.host, c.path, c.name, v, c.isSecure, c.isHttpOnly, c.isSession, c.expiry, c.originAttributes);
+  }
  }
 };
 window.addEventListener('load', muTube.LoadListener, false);
