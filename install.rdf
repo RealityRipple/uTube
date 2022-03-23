@@ -12,6 +12,13 @@
     <em:maxVersion>30.0</em:maxVersion>
    </Description>
   </em:targetApplication>
+  <em:targetApplication>
+   <Description>
+    <em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>
+    <em:minVersion>30.0</em:minVersion>
+    <em:maxVersion>30.*</em:maxVersion>
+   </Description>
+  </em:targetApplication>
   <em:description>Show an embedded video on a simple blank page when visiting a YouTube video link.</em:description>
   <em:homepageURL>https://realityripple.com/Software/XUL/uTube/</em:homepageURL>
   <em:updateURL>https://realityripple.com/Software/XUL/uTube/update.rdf</em:updateURL>
