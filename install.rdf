@@ -3,20 +3,13 @@
  <Description about="urn:mozilla:install-manifest">
   <em:name>uTube</em:name>
   <em:id>{EC845603-2E80-5C58-AEB0-7791201C9A9C}</em:id>
-  <em:version>30.29</em:version>
+  <em:version>31.0</em:version>
   <em:type>2</em:type>
   <em:targetApplication>
    <Description>
-    <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-    <em:minVersion>30.0</em:minVersion>
-    <em:maxVersion>30.*</em:maxVersion>
-   </Description>
-  </em:targetApplication>
-  <em:targetApplication>
-   <Description>
     <em:id>{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4}</em:id>
-    <em:minVersion>29.0</em:minVersion>
-    <em:maxVersion>30.*</em:maxVersion>
+    <em:minVersion>31.0</em:minVersion>
+    <em:maxVersion>31.*</em:maxVersion>
    </Description>
   </em:targetApplication>
   <em:description>Show an embedded video on a simple blank page when visiting a YouTube video link.</em:description>
