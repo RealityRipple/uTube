@@ -68,7 +68,7 @@ var uTube = {
     else if (result.hasOwnProperty('v'))
      aBrowser.setAttribute('skipV', result.v);
    }
-   if (result.hasOwnProperty('feature') && result.feature === 'emb_imp_woyt')
+   if (result.hasOwnProperty('feature') && (result.feature === 'emb_imp_woyt' || result.feature === 'emb_logo'))
    {
     if (result.hasOwnProperty('list'))
      aBrowser.setAttribute('skipPL', result.list);
