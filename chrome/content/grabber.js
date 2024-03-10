@@ -17,6 +17,10 @@ var uTube = {
   onLocationChange: function(aBrowser, aProgress, aRequest, aURI, aFlags)
   {
    let defU = uTube.hostedURL();
+   let c = uTube.useNoCookie();
+   let d = 'https://www.youtube-nocookie.com/embed/';
+   if (!c)
+    d = 'https://www.youtube.com/embed/';
    if (defU)
    {
     if (aURI.asciiSpec.slice(0, defU.length) === defU)
@@ -33,7 +37,7 @@ var uTube = {
    }
    else
    {
-    if (aURI.asciiSpec.slice(0, 39) === 'https://www.youtube-nocookie.com/embed/')
+    if (aURI.asciiSpec.slice(0, d.length) === d)
     {
      if (aProgress.DOMWindow.uTubeErrorChecker)
       aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
@@ -105,13 +109,13 @@ var uTube = {
     {
      if (result.hasOwnProperty('list'))
      {
-      u = 'https://www.youtube-nocookie.com/embed/' + result.v + '?list=' + result.list;
+      u = d + result.v + '?list=' + result.list;
       if (a)
        u += '&autoplay=1';
      }
      else
      {
-      u = 'https://www.youtube-nocookie.com/embed/' + result.v;
+      u = d + result.v;
       if (a)
        u += '?autoplay=1';
      }
@@ -124,6 +128,8 @@ var uTube = {
       u = defU + '#' + result.v;
      if (a)
       u += '!';
+     if (!c)
+      u += '@';
     }
     if (!u)
      return;
@@ -139,7 +145,7 @@ var uTube = {
     let pu = false;
     if (!defU)
     {
-     pu = 'https://www.youtube-nocookie.com/embed/videoseries?list=' + result.list;
+     pu = d + 'videoseries?list=' + result.list;
      if (a)
       pu += '&autoplay=1';
     }
@@ -148,6 +154,8 @@ var uTube = {
      pu = defU + '#' + result.list;
      if (a)
       pu += '!';
+     if (!c)
+      pu += '@';
     }
     if (!pu)
      return;
@@ -252,6 +260,13 @@ var uTube = {
   if (!prefs.prefHasUserValue('extensions.utube.autoplay'))
    return false;
   return prefs.getBoolPref('extensions.utube.autoplay');
+ },
+ useNoCookie: function()
+ {
+  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+  if (!prefs.prefHasUserValue('extensions.utube.nocookie'))
+   return true;
+  return prefs.getBoolPref('extensions.utube.nocookie');
  }
 };
 window.addEventListener('load', uTube.LoadListener, false);
