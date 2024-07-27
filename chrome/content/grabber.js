@@ -252,7 +252,7 @@ var uTube = {
    return false;
   if (prefs.prefHasUserValue('extensions.utube.hostedURL'))
    return prefs.getCharPref('extensions.utube.hostedURL');
-  return 'https://realityripple.com/Software/XUL/uTube/play.html';
+  return 'https://utube.realityripple.com/';
  },
  useAutoplay: function()
  {
