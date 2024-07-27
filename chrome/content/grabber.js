@@ -16,38 +16,17 @@ var uTube = {
   },
   onLocationChange: function(aBrowser, aProgress, aRequest, aURI, aFlags)
   {
-   let defU = uTube.hostedURL();
-   let c = uTube.useNoCookie();
-   let d = 'https://www.youtube-nocookie.com/embed/';
-   if (!c)
-    d = 'https://www.youtube.com/embed/';
-   if (defU)
+   const defU = 'https://utube.realityripple.com/';
+   if (aURI.asciiSpec.slice(0, defU.length) === defU)
    {
-    if (aURI.asciiSpec.slice(0, defU.length) === defU)
-    {
-     if (aProgress.DOMWindow.uTubeErrorChecker)
-      aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
-     aProgress.DOMWindow.uTubeErrorChecker = aProgress.DOMWindow.setInterval(uTube.checkForError, 500);
-    }
-    else
-    {
-     if (aProgress.DOMWindow.uTubeErrorChecker)
-      aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
-    }
+    if (aProgress.DOMWindow.uTubeErrorChecker)
+     aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
+    aProgress.DOMWindow.uTubeErrorChecker = aProgress.DOMWindow.setInterval(uTube.checkForError, 500);
    }
    else
    {
-    if (aURI.asciiSpec.slice(0, d.length) === d)
-    {
-     if (aProgress.DOMWindow.uTubeErrorChecker)
-      aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
-     aProgress.DOMWindow.uTubeErrorChecker = aProgress.DOMWindow.setInterval(uTube.checkForError, 500);
-    }
-    else
-    {
-     if (aProgress.DOMWindow.uTubeErrorChecker)
-      aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
-    }
+    if (aProgress.DOMWindow.uTubeErrorChecker)
+     aProgress.DOMWindow.clearInterval(aProgress.DOMWindow.uTubeErrorChecker);
    }
    if (aURI.asciiHost !== 'www.youtube.com' && aURI.asciiHost !== 'm.youtube.com')
    {
@@ -98,41 +77,20 @@ var uTube = {
     aBrowser.removeAttribute('skipV');
    }
    let a = uTube.useAutoplay();
+   let c = uTube.useNoCookie();
    if (aURI.filePath === '/watch')
    {
     if (!result.hasOwnProperty('v'))
      return;
     if (aRequest)
      aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-    let u = false;
-    if (!defU)
-    {
-     if (result.hasOwnProperty('list'))
-     {
-      u = d + result.v + '?list=' + result.list;
-      if (a)
-       u += '&autoplay=1';
-     }
-     else
-     {
-      u = d + result.v;
-      if (a)
-       u += '?autoplay=1';
-     }
-    }
-    else
-    {
-     if (result.hasOwnProperty('list'))
-      u = defU + '#' + result.v + '$' + result.list;
-     else
-      u = defU + '#' + result.v;
-     if (a)
-      u += '!';
-     if (!c)
-      u += '@';
-    }
-    if (!u)
-     return;
+    let u = defU + '#' + result.v;
+    if (result.hasOwnProperty('list'))
+     u += '$' + result.list;
+    if (a)
+     u += '!';
+    if (!c)
+     u += '@';
     aProgress.DOMWindow.location.replace(u);
     return;
    }
@@ -142,23 +100,11 @@ var uTube = {
      return;
     if (aRequest)
      aRequest.cancel(Components.results.NS_BINDING_ABORTED);
-    let pu = false;
-    if (!defU)
-    {
-     pu = d + 'videoseries?list=' + result.list;
-     if (a)
-      pu += '&autoplay=1';
-    }
-    else
-    {
-     pu = defU + '#' + result.list;
-     if (a)
-      pu += '!';
-     if (!c)
-      pu += '@';
-    }
-    if (!pu)
-     return;
+    let pu = defU + '#' + result.list;
+    if (a)
+     pu += '!';
+    if (!c)
+     pu += '@';
     aProgress.DOMWindow.location.replace(pu);
     return;
    }
@@ -213,30 +159,6 @@ var uTube = {
      this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '&embeds_referring_origin=');
     }
    }
-   else if (this.location.pathname.slice(0, 7) === '/embed/')
-   {
-    let v = this.location.pathname.slice(7);
-    let result = {};
-    if (this.location.search)
-    {
-     this.location.search.slice(1).split('&').forEach(
-      function(part)
-      {
-       let item = part.split('=');
-       result[item[0]] = decodeURIComponent(item[1]);
-      }
-     );
-    }
-    let p = null;
-    if (result.hasOwnProperty('list'))
-     p = result.list;
-    if (v === 'videoseries')
-     this.location.replace('https://www.youtube.com/playlist?list=' + p + '&embeds_referring_origin=');
-    else if (p === null)
-     this.location.replace('https://www.youtube.com/watch?v=' + v + '&embeds_referring_origin=');
-    else
-     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '&embeds_referring_origin=');
-   }
    return;
   }
   if (mp.classList.contains('playing-mode'))
@@ -244,15 +166,6 @@ var uTube = {
    this.clearInterval(this.uTubeErrorChecker);
    return;
   }
- },
- hostedURL: function()
- {
-  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
-  if (prefs.prefHasUserValue('extensions.utube.hosted') && prefs.getBoolPref('extensions.utube.hosted') === false)
-   return false;
-  if (prefs.prefHasUserValue('extensions.utube.hostedURL'))
-   return prefs.getCharPref('extensions.utube.hostedURL');
-  return 'https://utube.realityripple.com/';
  },
  useAutoplay: function()
  {
