@@ -76,6 +76,9 @@ var uTube = {
     }
     aBrowser.removeAttribute('skipV');
    }
+   let time = false;
+   if (result.hasOwnProperty('t'))
+    time = result.t;
    let a = uTube.useAutoplay();
    let c = uTube.useNoCookie();
    if (aURI.filePath === '/watch')
@@ -87,6 +90,8 @@ var uTube = {
     let u = defU + '#' + result.v;
     if (result.hasOwnProperty('list'))
      u += '$' + result.list;
+    if (time)
+     u += '~' + time;
     if (a)
      u += '!';
     if (!c)
@@ -101,6 +106,8 @@ var uTube = {
     if (aRequest)
      aRequest.cancel(Components.results.NS_BINDING_ABORTED);
     let pu = defU + '#' + result.list;
+    if (time)
+     pu += '~' + time;
     if (a)
      pu += '!';
     if (!c)
