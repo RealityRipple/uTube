@@ -1,4 +1,6 @@
 var uTube = {
+ _prefs: Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getBranch('extensions.utube.'),
+ _defs: Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService).getDefaultBranch('extensions.utube.'),
  LoadListener: function()
  {
   window.removeEventListener('load', uTube.LoadListener, false);
@@ -178,24 +180,24 @@ var uTube = {
  },
  useAutoplay: function()
  {
-  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
-  if (!prefs.prefHasUserValue('extensions.utube.autoplay'))
-   return false;
-  return prefs.getBoolPref('extensions.utube.autoplay');
+  const n = 'autoplay';
+  if (!uTube._prefs.prefHasUserValue(n))
+   return uTube._defs.getBoolPref(n, false);
+  return uTube._prefs.getBoolPref(n);
  },
  useNoCookie: function()
  {
-  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
-  if (!prefs.prefHasUserValue('extensions.utube.nocookie'))
-   return true;
-  return prefs.getBoolPref('extensions.utube.nocookie');
+  const n = 'nocookie';
+  if (!uTube._prefs.prefHasUserValue(n))
+   return uTube._defs.getBoolPref(n, true);
+  return uTube._prefs.getBoolPref(n);
  },
  useFallback: function()
  {
-  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
-  if (!prefs.prefHasUserValue('extensions.utube.fallback'))
-   return true;
-  return prefs.getBoolPref('extensions.utube.fallback');
+  const n = 'fallback';
+  if (!uTube._prefs.prefHasUserValue(n))
+   return uTube._defs.getBoolPref(n, true);
+  return uTube._prefs.getBoolPref(n);
  }
 };
 window.addEventListener('load', uTube.LoadListener, false);
