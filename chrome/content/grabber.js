@@ -149,22 +149,24 @@ var uTube = {
   if (mp.classList.contains('ytp-embed-error'))
   {
    this.clearInterval(this.uTubeErrorChecker);
-   if (this.location.hash)
+   if (!this.location.hash)
+    return;
+   let b = uTube.useFallback();
+   if (!b)
+    return;
+   let h = this.location.hash.slice(1);
+   if (h.indexOf('$') === -1)
    {
-    let h = this.location.hash.slice(1);
-    if (h.indexOf('$') === -1)
-    {
-     if (h.slice(0, 2) === 'PL' && h.length > 12)
-      this.location.replace('https://www.youtube.com/playlist?list=' + h + '&embeds_referring_origin=');
-     else
-      this.location.replace('https://www.youtube.com/watch?v=' + h + '&embeds_referring_origin=');
-    }
+    if (h.slice(0, 2) === 'PL' && h.length > 12)
+     this.location.replace('https://www.youtube.com/playlist?list=' + h + '&embeds_referring_origin=');
     else
-    {
-     let v = h.slice(0, h.indexOf('$'));
-     let p = h.slice(h.indexOf('$') + 1);
-     this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '&embeds_referring_origin=');
-    }
+     this.location.replace('https://www.youtube.com/watch?v=' + h + '&embeds_referring_origin=');
+   }
+   else
+   {
+    let v = h.slice(0, h.indexOf('$'));
+    let p = h.slice(h.indexOf('$') + 1);
+    this.location.replace('https://www.youtube.com/watch?v=' + v + '&list=' + p + '&embeds_referring_origin=');
    }
    return;
   }
@@ -187,6 +189,13 @@ var uTube = {
   if (!prefs.prefHasUserValue('extensions.utube.nocookie'))
    return true;
   return prefs.getBoolPref('extensions.utube.nocookie');
+ },
+ useFallback: function()
+ {
+  let prefs = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefBranch);
+  if (!prefs.prefHasUserValue('extensions.utube.fallback'))
+   return true;
+  return prefs.getBoolPref('extensions.utube.fallback');
  }
 };
 window.addEventListener('load', uTube.LoadListener, false);

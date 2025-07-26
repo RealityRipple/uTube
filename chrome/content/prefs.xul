@@ -3,4 +3,5 @@
 <vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <setting type="bool" pref="extensions.utube.autoplay" title="&utube.autoplay.title;" desc="&utube.autoplay.desc;" />
  <setting type="bool" pref="extensions.utube.nocookie" title="&utube.nocookie.title;" desc="&utube.nocookie.desc;" />
+ <setting type="bool" pref="extensions.utube.fallback" title="&utube.fallback.title;" desc="&utube.fallback.desc;" />
 </vbox>

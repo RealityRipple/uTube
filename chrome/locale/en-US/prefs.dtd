@@ -2,3 +2,5 @@
 <!ENTITY utube.autoplay.desc "If you want videos to play immediately on loading, check this box. If you want to prevent autoplay, uncheck it!">
 <!ENTITY utube.nocookie.title "Privacy-Enhanced">
 <!ENTITY utube.nocookie.desc "This uses the &quot;youtube-nocookie.com&quot; domain, which prevents YouTube from tracking what you watch.">
+<!ENTITY utube.fallback.title "Fallback on Error">
+<!ENTITY utube.fallback.desc "If the video can't be played for some reason, redirect to the video on the YouTube website.">
