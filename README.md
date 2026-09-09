@@ -2,7 +2,7 @@
 Load the mobile version whenever visiting YouTube.
 
 #### Supports
- * Pale Moon [34.0 - 34.*]
+ * Pale Moon [31.0 - 35.*]
 
 ## Building
 Simply download the contents of the repository and pack the contents (sans git data) into a .zip file. Then, rename the file to .xpi and drag into the browser.
